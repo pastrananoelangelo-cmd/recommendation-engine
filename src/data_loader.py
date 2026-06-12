@@ -1,15 +1,20 @@
 import csv
 
-file_path = "data/interactions.csv"
+def load_interactions(filename):
+    interactions = {}
 
-with open(file_path, "r") as file:
-    data = csv.reader(file)
+    with open(filename, "r") as file:
+        data = csv.DictReader(file)
 
-dict = {}
+        for row in data:
+            user = row["user"]
+            item = row["item"]
 
-for row in data:
-    user = row[0]
-    item = row[1]
-
-    print(user, item)
+            if user not in interactions:
+                interactions[user] = []
+            
+            interactions[user].append(item)
+    
+    return interactions
+            
 
