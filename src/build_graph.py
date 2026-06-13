@@ -17,3 +17,31 @@ def build_item_graph(interactions):
                     main_item[items[j]][items[i]] += 1
 
     return main_item
+
+
+def compute_popularity(interactions):
+    popularity = {}
+
+    for user, items in interactions.items():
+        for item in set(items):
+            if item not in popularity:
+                popularity[item] = 0
+            popularity[item] += 1
+    
+    return popularity
+
+
+def normalize_graph(connections):
+    normalized_connections = {}
+    
+    for main_item, related_items in connections.items():
+        normalized_connections[main_item] = {}
+        denominator = 0
+
+        for item, weight in related_items.items():
+            denominator += weight
+        
+        for item, weight in related_items.items():
+            normalized_connections[main_item][item] = weight / denominator
+    
+    return normalized_connections
